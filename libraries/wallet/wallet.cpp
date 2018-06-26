@@ -112,6 +112,7 @@ private:
    operation_result result;
 
    std::string fee(const asset& a) const;
+   void memo(const memo_data& m) const;
 
 public:
    operation_printer( ostream& out, const wallet_api_impl& wallet, const operation_result& r = operation_result() )
@@ -130,6 +131,7 @@ public:
    std::string operator()(const account_create_operation& op)const;
    std::string operator()(const account_update_operation& op)const;
    std::string operator()(const asset_create_operation& op)const;
+   std::string operator()(const asset_issue_operation& op)const;
 };
 
 template<class T>
@@ -2713,6 +2715,29 @@ std::string operation_printer::fee(const asset& a)const {
    return "";
 }
 
+void operation_printer::memo(const memo_data& m) const
+{
+   if( wallet.is_locked() )
+   {
+      out << " -- Unlock wallet to see memo.";
+   } else {
+      try {
+         FC_ASSERT(wallet._keys.count(m.to) || wallet._keys.count(m.from), "Memo is encrypted to a key ${to} or ${from} not in this wallet.", ("to", m.to)("from",m.from));
+         if( wallet._keys.count(m.to) ) {
+            auto my_key = wif_to_key(wallet._keys.at(m.to));
+            FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
+            out << " -- Memo: " << m.get_message(*my_key, m.from);
+         } else {
+            auto my_key = wif_to_key(wallet._keys.at(m.from));
+            FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
+            out << " -- Memo: " << m.get_message(*my_key, m.to);
+         }
+      } catch (const fc::exception& e) {
+         out << " -- could not decrypt memo";
+      }
+   }
+}
+
 template<typename T>
 std::string operation_printer::operator()(const T& op)const
 {
@@ -2759,33 +2784,9 @@ string operation_printer::operator()(const transfer_operation& op) const
 {
    out << "Transfer " << wallet.get_asset(op.amount.asset_id).amount_to_pretty_string(op.amount)
        << " from " << wallet.get_account(op.from).name << " to " << wallet.get_account(op.to).name;
-   std::string memo;
    if( op.memo )
-   {
-      if( wallet.is_locked() )
-      {
-         out << " -- Unlock wallet to see memo.";
-      } else {
-         try {
-            FC_ASSERT(wallet._keys.count(op.memo->to) || wallet._keys.count(op.memo->from), "Memo is encrypted to a key ${to} or ${from} not in this wallet.", ("to", op.memo->to)("from",op.memo->from));
-            if( wallet._keys.count(op.memo->to) ) {
-               auto my_key = wif_to_key(wallet._keys.at(op.memo->to));
-               FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
-               memo = op.memo->get_message(*my_key, op.memo->from);
-               out << " -- Memo: " << memo;
-            } else {
-               auto my_key = wif_to_key(wallet._keys.at(op.memo->from));
-               FC_ASSERT(my_key, "Unable to recover private key to decrypt memo. Wallet may be corrupted.");
-               memo = op.memo->get_message(*my_key, op.memo->to);
-               out << " -- Memo: " << memo;
-            }
-         } catch (const fc::exception& e) {
-            out << " -- could not decrypt memo";
-         }
-      }
-   }
-   fee(op.fee);
-   return memo;
+       memo(*op.memo);
+   return fee(op.fee);
 }
 
 std::string operation_printer::operator()(const account_create_operation& op) const
@@ -2808,6 +2809,16 @@ std::string operation_printer::operator()(const asset_create_operation& op) cons
    else
       out << "User-Issue Asset ";
    out << "'" << op.symbol << "' with issuer " << wallet.get_account(op.issuer).name;
+   return fee(op.fee);
+}
+
+std::string operation_printer::operator()(const asset_issue_operation& op)const
+{
+   out << "Issue " << wallet.get_asset(op.asset_to_issue.asset_id).amount_to_pretty_string(op.asset_to_issue.amount)
+       << " for " << wallet.get_account(op.issue_to_account).name << ". Issuer " << wallet.get_account(op.issuer).name;
+
+   if( op.memo )
+       memo(*op.memo);
    return fee(op.fee);
 }
 
