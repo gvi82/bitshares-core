@@ -1,0 +1,1 @@
+sshfs -o allow_other node@158.69.224.80:/home/node -p 65296 /mnt/den-node

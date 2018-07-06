@@ -1,0 +1,22 @@
+#!/bin/bash
+
+rm -rf ./data
+
+nohup "$BLOCKNACHIN_ROOT"/programs/witness_node/witness_node --genesis-json="$BLOCKNACHIN_GENESIS" --data-dir=./data \
+  --private-key=[\"PLC6EyA4Eo1rniSN2MFbrJZLeyXzTPof1FpLMJuap6jDuXnjmpSQf\",\"5Ht3ra3665GZBJQUCL6F1PUTrjcnQemiDkHW1eZGLcFq5BXHU5w\"] -w \"1.6.1\" \
+  --enable-stale-production --rpc-endpoint=0.0.0.0:$BLOCKNACHIN_EP \
+   </dev/null >./logs/node.out 2>&1 &
+
+sleep 1.5
+
+pid=$!
+
+kill -s 0 $pid
+
+if [ $? -ne 0 ]; then
+    echo "$0 failed"
+    return 1
+fi
+
+echo $0 pid $pid
+

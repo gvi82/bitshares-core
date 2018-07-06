@@ -1,0 +1,13 @@
+#!/bin/bash
+
+export BLOCKNACHIN_ROOT=/home/node/prj-bitshares/build
+export BLOCKNACHIN_GENESIS=/home/vgrinko/prj/tp-project/my-genesis.json
+export BLOCKNACHIN_PORT=8090
+export WALLET_PORT=8091
+
+mkdir -p logs
+
+./run_node || exit 1
+./run_wallet || exit 1
+
+python3 ./init_accounts.py || exit 1

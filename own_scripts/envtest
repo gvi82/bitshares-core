@@ -1,0 +1,1 @@
+echo "${CHAIN_ID:?Need to set chain id not empty}"

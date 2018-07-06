@@ -1,0 +1,22 @@
+rm -rf wallet
+mkdir wallet
+cd wallet
+
+nohup "$BLOCKNACHIN_ROOT"/programs/cli_wallet/cli_wallet --wallet-file=total-wallet.json\
+  --chain-id 50b3e77b9b27a0a032c2c3ef5d99a0af25d29e99b655710c597f6d297bc6aa28 \
+  --server-rpc-endpoint=ws://localhost:$BLOCKCHAIN_PORT --rpc-endpoint=0.0.0.0:$WALLET_PORT --daemon \
+  </dev/null > .wallet.out 2>&1 &
+
+sleep 1
+
+pid=$!
+
+kill -s 0 $pid
+
+if [ $? -ne 0 ]; then
+    echo "$0 failed"
+    return 1
+fi
+
+echo $0 pid $pid
+
