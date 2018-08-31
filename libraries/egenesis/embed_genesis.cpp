@@ -84,7 +84,7 @@ void convert_to_c_array(
 {
    dest.reserve( src.length() * 6 / 5 );
    bool needs_comma = false;
-   int row = 0;
+   int row = 0;         
    for( std::string::size_type i=0; i<src.length(); i+=width )
    {
       std::string::size_type j = std::min( i+width, src.length() );
