@@ -5,4 +5,6 @@ BITSHARESD_PRIVATE_KEY=[\"PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN\
  --genesis-json=/startup/pvdgenesis.json \
  --witness-id=$BITSHARESD_WITNESS_ID \
  --private-key=$BITSHARESD_PRIVATE_KEY \
+ --rpc-endpoint=0.0.0.0:8090 \
+ --p2p-endpoint=0.0.0.0:1776 \
  --enable-stale-production
