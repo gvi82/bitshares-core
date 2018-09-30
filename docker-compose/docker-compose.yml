@@ -8,8 +8,17 @@ services:
     restart: always
     command: ["sh", "-c", "/startup/start_pd_network.sh"]
     volumes:
-      - "./bitshares-seednode:/var/lib/bitshares"
+      - "./pvd-seednode:/var/lib/bitshares"
       - ".:/startup"
     ports:
       - "127.0.0.1:8090:8090"
       - "0.0.0.0:1776:1776"
+
+  secondwit:
+    image: pvdcore
+    container_name: secondwit
+    restart: always
+    command: ["sh", "-c", "/startup/start_second_witness.sh"]
+    volumes:
+      - "./pvd-secondwit:/var/lib/bitshares"
+      - ".:/startup"
