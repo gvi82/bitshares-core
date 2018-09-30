@@ -1,5 +1,5 @@
 {
-  "initial_timestamp": "2018-06-13T10:47:35",
+  "initial_timestamp": "2018-09-29T15:43:10",
   "max_core_supply": "1000000000000000",
   "initial_parameters": {
     "current_fees": {
@@ -240,46 +240,35 @@
     "extensions": []
   },
   "initial_accounts": [{
-      "name": "init0",
-      "owner_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "active_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
+      "name": "pvdwit0",
+      "owner_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN",
+      "active_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN",
       "is_lifetime_member": true
     },{
-      "name": "init1",
-      "owner_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "active_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
+      "name": "pvdwit1",
+      "owner_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN",
+      "active_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN",
       "is_lifetime_member": true
     },{
-      "name": "init2",
-      "owner_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "active_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "is_lifetime_member": true
-    },{
-      "name": "init3",
-      "owner_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "active_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "is_lifetime_member": true
-    },{
-      "name": "nathan",
-      "owner_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
-      "active_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV",
+      "name": "providenta",
+      "owner_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN",
+      "active_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN",
       "is_lifetime_member": true
     }
   ],
-  "initial_assets": [
-  {
-    "accumulated_fees": 0,
-    "collateral_records": [],
-    "description": "providenta asset",
-    "is_bitasset": false,
-    "issuer_name": "nathan",
-    "max_supply": "100000000000",
-    "precision": 5,
-    "symbol": "PVD"
-   }
-    ],
+  "initial_assets": [{
+      "symbol": "PVD",
+      "issuer_name": "providenta",
+      "description": "Providenta asset",
+      "precision": 5,
+      "max_supply": "10000000000000",
+      "accumulated_fees": 0,
+      "is_bitasset": false,
+      "collateral_records": []
+    }
+  ],
   "initial_balances": [{
-      "owner": "PVDFAbAx7yuxt725qSZvfwWqkdCwp9ZnUama",
+      "owner": "PVDMiHcVJyQKcCrn41zkQMw2Poh1KqugL3of",
       "asset_symbol": "GAS",
       "amount": "1000000000000000"
     }
@@ -287,24 +276,23 @@
   "initial_vesting_balances": [],
   "initial_active_witnesses": 1,
   "initial_witness_candidates": [{
-      "owner_name": "init1",
-      "block_signing_key": "PVD6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV"
+      "owner_name": "pvdwit0",
+      "block_signing_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN"
+    },{
+      "owner_name": "pvdwit1",
+      "block_signing_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN"
     }
   ],
   "initial_committee_candidates": [{
-      "owner_name": "init0"
+      "owner_name": "pvdwit0"
     },{
-      "owner_name": "init1"
-    },{
-      "owner_name": "init2"
-    },{
-      "owner_name": "init3"
+      "owner_name": "pvdwit1"
     }
   ],
   "initial_worker_candidates": [],
-  "initial_chain_id": "4bd2a4bc0b35f8a7663fb92dad900ec1e9149e6ad0b40c57ef7d88cb85c8ff9d",
+  "initial_chain_id": "aa34045518f1469a28fa4578240d5f039afa9959c0b95ce3b39674efa691fb21",
   "immutable_parameters": {
-    "min_committee_member_count": 11,
+    "min_committee_member_count": 1,
     "min_witness_count": 1,
     "num_special_accounts": 0,
     "num_special_assets": 0

@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  pvdnode:
+    image: pdvchain:v2
+    container_name: seednode1
+    restart: always
+    environment:
+      - BITSHARESD_WITNESS_ID="1.6.1"
+      - BITSHARESD_PRIVATE_KEY=["PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN","5Jg7GUoFL1YnUVQ5j7CjDcZPBSo83QgUHia9Et5t7D6n2f3M5Mj"]
+    command: ["sh", "-c", "/startup/start_pd_network.sh"]
+    volumes:
+      - "./bitshares-seednode:/var/lib/bitshares"
+      - ".:/startup"
+    ports:
+      - "0.0.0.0:8090:8090"
+      - "0.0.0.0:1776:1776"

@@ -79,8 +79,8 @@ namespace bpo = boost::program_options;
 namespace detail {
 
    graphene::chain::genesis_state_type create_example_genesis() {
-      auto nathan_key = fc::ecc::private_key::regenerate(fc::sha256::hash(string("nathan")));
-      dlog("Allocating all stake to ${key}", ("key", utilities::key_to_wif(nathan_key)));
+      auto providenta_key = fc::ecc::private_key::regenerate(fc::sha256::hash(string("providenta")));
+      ilog("Allocating all stake to ${key}", ("key", utilities::key_to_wif(providenta_key)));
       graphene::chain::genesis_state_type initial_state;
       initial_state.initial_parameters.current_fees = fee_schedule::get_default();//->set_all_fees(GRAPHENE_BLOCKCHAIN_PRECISION);
       initial_state.initial_active_witnesses = GRAPHENE_DEFAULT_MIN_WITNESS_COUNT;
@@ -89,17 +89,25 @@ namespace detail {
             initial_state.initial_parameters.block_interval);
       for( uint64_t i = 0; i < initial_state.initial_active_witnesses; ++i )
       {
-         auto name = "init"+fc::to_string(i);
+         auto name = "pvdwit"+fc::to_string(i);
          initial_state.initial_accounts.emplace_back(name,
-                                                     nathan_key.get_public_key(),
-                                                     nathan_key.get_public_key(),
+                                                     providenta_key.get_public_key(),
+                                                     providenta_key.get_public_key(),
                                                      true);
          initial_state.initial_committee_candidates.push_back({name});
-         initial_state.initial_witness_candidates.push_back({name, nathan_key.get_public_key()});
+         initial_state.initial_witness_candidates.push_back({name, providenta_key.get_public_key()});
       }
 
-      initial_state.initial_accounts.emplace_back("nathan", nathan_key.get_public_key());
-      initial_state.initial_balances.push_back({nathan_key.get_public_key(),
+      genesis_state_type::initial_asset_type atype;
+      atype.symbol = "PVD";
+      atype.issuer_name = "providenta";
+      atype.description = "Providenta asset";
+      atype.max_supply = 10000000000000;
+
+      initial_state.initial_assets.push_back(atype);
+
+      initial_state.initial_accounts.emplace_back("providenta", providenta_key.get_public_key(), providenta_key.get_public_key(), true);
+      initial_state.initial_balances.push_back({providenta_key.get_public_key(),
                                                 GRAPHENE_SYMBOL,
                                                 GRAPHENE_MAX_SHARE_SUPPLY});
       initial_state.initial_chain_id = fc::sha256::hash( "BOGUS" );
