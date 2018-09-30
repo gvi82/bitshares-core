@@ -274,7 +274,7 @@
     }
   ],
   "initial_vesting_balances": [],
-  "initial_active_witnesses": 1,
+  "initial_active_witnesses": 2,
   "initial_witness_candidates": [{
       "owner_name": "pvdwit0",
       "block_signing_key": "PVD6wGqbawxvcK7Bpgiu7QaaAD54CmaB9Hh8mRUVPzq4EthbEvJaN"
